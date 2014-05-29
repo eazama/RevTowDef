@@ -21,7 +21,7 @@ public class Test : MonoBehaviour {
 		Debug.Log(l.Contains(b));
 
 
-		Stack<GridCoord> path = Pathfinder.FindPath(new GridCoord(0,0), new GridCoord(5,8), GameObject.FindGameObjectsWithTag("Barrier"));
+		Stack<GridCoord> path = Pathfinder.FindPath(new GridCoord(0,0), new GridCoord(5,8));
 		if(path == null){Debug.Log("no path");return;}
 		foreach(GridCoord coord in path){
 			Debug.Log(coord.x + " " + coord.y);

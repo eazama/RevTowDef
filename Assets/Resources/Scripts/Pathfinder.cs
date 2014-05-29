@@ -12,24 +12,31 @@ public static class Pathfinder
 	public static Stack<GridCoord> path;
 	public static List<GridCoord> toExpand;
 
-	public static Stack<GridCoord> FindPath (GridCoord start, GridCoord finish, GameObject[] barriers)
-	{
-		visited = new List<GridCoord> ();
-		path = new Stack<GridCoord> ();
-		toExpand = new List<GridCoord> ();
+	private static void buildGrid(){
 		grid = new bool[width, length];
 		for (int i = 0; i < width; ++i) {
 			for (int j = 0; j < length; ++j) {
 				grid [i, j] = false;
 			}
 		}
-		foreach (GameObject obj in barriers) {
+		foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Barrier")) {
 			try {
 				grid [Mathf.FloorToInt (obj.transform.position.x), Mathf.FloorToInt (obj.transform.position.y)] = true;
 			} catch (System.Exception ex) {
-
+				
 			}
 		}
+	}
+
+	public static Stack<GridCoord> FindPath (GridCoord start, GridCoord finish)
+	{
+		if(grid == null) {
+			buildGrid();
+		}
+		visited = new List<GridCoord> ();
+		path = new Stack<GridCoord> ();
+		toExpand = new List<GridCoord> ();
+
 		toExpand.Add (start);
 		GridCoord cell = nextCell ();
 		while (cell != null && !cell.Equals ( finish)) {
