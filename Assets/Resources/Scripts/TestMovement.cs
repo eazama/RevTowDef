@@ -24,7 +24,12 @@ public class TestMovement : MonoBehaviour
 	void Update()
 	{
 		if(!moving && path.Count > 0) {
+
 			target = path.Pop();
+			float dY = target.y - transform.position.y;
+			float dX = target.x - transform.position.x;
+			float angle = Mathf.Atan2(dY,dX) *180 /Mathf.PI;
+			transform.eulerAngles = new Vector3(0,0,angle-90);
 			StartCoroutine(Move(gameObject.transform.position, new Vector3(target.x,
 			                                                               target.y,
 			                                                               gameObject.transform.position.z)));
@@ -46,7 +51,7 @@ public class TestMovement : MonoBehaviour
 
 	public IEnumerator Move(Vector3 from, Vector3 to)
 	{
-		Debug.Log("Moving");
+
 		moving = true;
 		if(from.Equals(to)) {
 			moving = false;
