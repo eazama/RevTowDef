@@ -29,7 +29,7 @@ public class turretScript : MonoBehaviour
 		if (myTarget) {
 			if (Time.time >= nextMoveTime) {
 				desiredRotation = CalculateAimPosition (myTarget.position);
-				Debug.Log(desiredRotation.z);
+				//Debug.Log(desiredRotation.z);
 				desiredRotation.x = 0;
 				desiredRotation.y = 0;
 				turretBall.rotation = Quaternion.Lerp (turretBall.rotation, desiredRotation, Time.deltaTime * turnSpeed);

@@ -13,6 +13,7 @@
            Blend SrcAlpha OneMinusSrcAlpha
            Tags {Queue=Transparent}
            SubShader {
+           Tags { "RenderType"="Transparent" }
                 Material {
                    Emission [_Color]
                 }

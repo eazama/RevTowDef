@@ -13,9 +13,9 @@ public class TestMovement : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		getPath();
+		getPath(GameObject.FindGameObjectWithTag("Goal"));
 		foreach(GridCoord g in path) {
-			Debug.Log(g.x + " " + g.y);
+			//Debug.Log(g.x + " " + g.y);
 		}
 
 	}
@@ -46,13 +46,11 @@ public class TestMovement : MonoBehaviour
 	}
 
 
-	public void getPath()
+	public void getPath(GameObject goal)
 	{
 		//starting grid coordinate (current x/y rounded)
 		GridCoord start = new GridCoord(Mathf.RoundToInt(target.x),
 		                                Mathf.RoundToInt(target.y));
-		//find a "goal" object
-		GameObject goal = GameObject.FindGameObjectWithTag("Goal");
 		//ending grid coordinate (goal's x/y rounded)
 		GridCoord finish = new GridCoord(Mathf.RoundToInt(goal.transform.position.x),
 		                                 Mathf.RoundToInt(goal.transform.position.y));

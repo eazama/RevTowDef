@@ -3,8 +3,8 @@ using System.Collections;
 
 public class ClickDrag : MonoBehaviour {
 
-	static bool holding = false;
-	bool thisHolding = false;
+	public static bool holding = false;
+	public bool thisHolding = false;
 
 	// Use this for initialization
 	void Start () {
@@ -26,14 +26,16 @@ public class ClickDrag : MonoBehaviour {
 		if(holding){
 			holding = false;
 			thisHolding = false;
-			foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Player")){
-				obj.GetComponent<TestMovement>().getPath ();
-			}
+			doTheThing ();
 		} else {
 			holding = true;
 			thisHolding = true;
-
 		}
+	}
 
+	void doTheThing(){
+		foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Player")){
+			obj.GetComponent<TestMovement>().getPath (GameObject.FindGameObjectWithTag("Goal"));
+		}
 	}
 }
