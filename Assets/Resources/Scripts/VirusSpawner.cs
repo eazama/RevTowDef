@@ -9,6 +9,10 @@ public class VirusSpawner:MonoBehaviour{
 			Debug.Log("SPAWNING BASIC");
 			Instantiate (Resources.Load("Prefabs/BasicVirus"));
 			break;
+		case 1:
+			Debug.Log("SPAWNING Wallbreaker");
+			Instantiate (Resources.Load("Prefabs/WallBreakVirus"));
+			break;
 		}
 	}
 }
