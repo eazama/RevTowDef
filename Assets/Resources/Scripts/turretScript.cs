@@ -10,12 +10,10 @@ public class turretScript : MonoBehaviour
 	public GameObject muzzleEffect;
 	public float errorAmount;
 	public Transform myTarget;
-	public Transform[] muzzlePositions;
 	public Transform turretBall;
 	private float nextFireTime;
 	private float nextMoveTime;
 	private Quaternion desiredRotation;
-	float aimError;
 
 	// Use this for initialization
 	void Start ()
@@ -46,7 +44,7 @@ public class turretScript : MonoBehaviour
 
 	public void OnTriggerEnter (Collider other)
 	{
-		if (other.gameObject.tag == "Player") {
+		if (myTarget == null && other.gameObject.tag == "Player") {
 			nextFireTime = (float)(Time.time + (reloadTime * .5));
 			myTarget = other.gameObject.transform;
 		}
@@ -66,9 +64,9 @@ public class turretScript : MonoBehaviour
 		return newRotation;
 	}
 
-	public void CalculateAimError ()
+	public float AimError ()
 	{
-		aimError = Random.Range (-errorAmount, errorAmount);
+		return Random.Range (-errorAmount, errorAmount);
 	}
 
 	public void FireProjectile ()
@@ -76,11 +74,13 @@ public class turretScript : MonoBehaviour
 		//audio.Play();
 		nextFireTime = Time.time + reloadTime;
 		nextMoveTime = Time.time + firePauseTime;
-		CalculateAimError ();
 
-		foreach (Transform theMuzzlePos in muzzlePositions) {
-			Instantiate (myProjectile, theMuzzlePos.position, theMuzzlePos.rotation);
-			Instantiate (muzzleEffect, theMuzzlePos.position, theMuzzlePos.rotation);
+		foreach (Transform theMuzzlePos in transform) {
+			GameObject proj = Instantiate (myProjectile, theMuzzlePos.position, theMuzzlePos.rotation) as GameObject;
+			Vector3 nRot = proj.transform.eulerAngles;
+			nRot.z += AimError();
+			proj.transform.eulerAngles = nRot;
+			//Instantiate (muzzleEffect, theMuzzlePos.position, theMuzzlePos.rotation);
 		}
 	}
 

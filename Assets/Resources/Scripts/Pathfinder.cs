@@ -23,7 +23,7 @@ public static class Pathfinder
 			try {
 				grid [Mathf.FloorToInt (obj.transform.position.x), Mathf.FloorToInt (obj.transform.position.y)] = true;
 			} catch (System.Exception ex) {
-				
+				Debug.Log (ex.StackTrace);
 			}
 		}
 	}

@@ -14,7 +14,7 @@ public class projectileScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        transform.Translate(Vector3.forward * Time.deltaTime * mySpeed);
+        transform.Translate(Vector3.up * Time.deltaTime * mySpeed);
         myDist += Time.deltaTime * mySpeed;
         if (myDist >= myRange)
         {
