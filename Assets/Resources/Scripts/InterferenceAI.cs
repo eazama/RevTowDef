@@ -16,8 +16,21 @@ public class InterferenceAI : MonoBehaviour
 			Debug.Log ("Place()");
 			if (Random.value < .3f) {
 				GameObject[] objs = GameObject.FindGameObjectsWithTag ("Barrier");
-				Vector3 bar = objs [Mathf.RoundToInt (Random.Range (0, objs.Length))].transform.position;
-				Instantiate (Resources.Load ("Prefabs/Turret"), new Vector3(bar.x, bar.y, 0), new Quaternion ());
+				if (objs.Length > 0) {
+					Vector3 bar = objs [Mathf.FloorToInt (Random.Range (0, objs.Length))].transform.position;
+					GameObject[] turrets = GameObject.FindGameObjectsWithTag ("Turret");
+					Vector3 pos = new Vector3 (bar.x, bar.y, 0);
+					bool doSpawn = true;
+					foreach (GameObject obj in turrets) {
+						if (obj.transform.position.Equals (pos)) {
+							doSpawn = false;
+							break;
+						}
+					}
+					if (doSpawn) {
+						Instantiate (Resources.Load ("Prefabs/Turret"), new Vector3 (bar.x, bar.y, 0), new Quaternion ());
+					}
+				}
 			}
 
 
