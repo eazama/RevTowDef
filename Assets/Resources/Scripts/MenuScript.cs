@@ -25,7 +25,7 @@ public class MenuScript : MonoBehaviour {
 		GUI.backgroundColor = new Color(0,0,0,0);
 		if (GUI.Button (new Rect (10, 5, sizeX, sizeY), playButton)) 
 		{
-			//Application.LoadLevel (Application.loadedLevel + 1);
+			Application.LoadLevel ("LevelScene");
 			//print ("reset!!");
 		}
 
