@@ -53,10 +53,15 @@ public class Shop : MonoBehaviour
 	//length of all items to scroll through
 	int scrolling_length;
 
+    //# of resources you have
+    public static double cashCount;
+
 	// Use this for initialization
 	void Start ()
 	{
 		scrolling_length = (witem_bg + between_items) * (items.Length);
+
+        cashCount = 150.00;
 
 		//set resolution
 		wratio = Screen.width;
@@ -128,6 +133,11 @@ public class Shop : MonoBehaviour
 			}
 
 		}
+
+        //draws cash
+        GUI.Label(new Rect(Screen.width - 275, Screen.height - 50, 1000, 200), "Cash : " + cashCount.ToString("##0.00"));
+
+
 		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), Overlap, ScaleMode.StretchToFill);
 		GUI.DrawTexture (new Rect (xbutton, ybutton, wscroll * wratio, hscroll * hratio), Button, ScaleMode.StretchToFill);
 
