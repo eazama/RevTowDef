@@ -4,7 +4,7 @@ using System.Collections;
 public class Shop : MonoBehaviour
 {
 	//shop textures
-	//public Texture2D Background;
+	public Texture2D Background;
 	public Texture2D Overlap;
 	public Texture2D Item_bg;
 	public Texture2D Button;
@@ -123,7 +123,7 @@ public class Shop : MonoBehaviour
 
 	void OnGUI ()
 	{
-		//GUI.DrawTexture (new Rect(0,0,Screen.width,Screen.height),Background,ScaleMode.StretchToFill);
+		GUI.DrawTexture (new Rect(0,0,Screen.width,Screen.height),Background,ScaleMode.StretchToFill);
 		for (int i = 0; i<items.Length; i++) {
 			GUI.DrawTexture (new Rect (xitem, yitem + (i * between_items * hratio), litem_bg * wratio, witem_bg * hratio), Item_bg, ScaleMode.StretchToFill);
 			if (GUI.Button (new Rect (xitem, yitem + (i * between_items * hratio), litem_bg * wratio, witem_bg * hratio), items [i], item_wording)){
@@ -133,18 +133,15 @@ public class Shop : MonoBehaviour
 			}
 
 		}
-
-        //draws cash
-        GUI.Label(new Rect(Screen.width - 275, Screen.height - 50, 1000, 200), "Cash : " + cashCount.ToString("##0.00"));
-
-
 		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), Overlap, ScaleMode.StretchToFill);
 		GUI.DrawTexture (new Rect (xbutton, ybutton, wscroll * wratio, hscroll * hratio), Button, ScaleMode.StretchToFill);
 
 		//current selected
 
 		GUI.Box (new Rect (560 * wratio, 350 * hratio, wratio, hratio), "Item: " + items [selected], item_wording);
-		
+
+		//draws cash
+		GUI.Label(new Rect(560 * wratio - 70, 350 * hratio - 30, 100, 20), "Cash : " + cashCount.ToString("##0.00"));
 	}
 
 }
