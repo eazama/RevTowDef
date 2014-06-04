@@ -31,7 +31,6 @@ public class MenuScript : MonoBehaviour {
 		if (!creditsPressed && !instructionsPressed) {
 			if (GUI.Button (new Rect (10, 5, sizeX, sizeY), playButton)) {
 					Application.LoadLevel ("LevelScene");
-					//print ("reset!!");
 			}
 
 			if (GUI.Button (new Rect (10, sizeX / 2 + 30, sizeX, sizeY), howToPlayButton)) {
