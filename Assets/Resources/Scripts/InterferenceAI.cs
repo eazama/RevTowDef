@@ -14,7 +14,7 @@ public class InterferenceAI : MonoBehaviour
 	{
 		while (true) {
 			Debug.Log ("Place()");
-			if (Random.value < .3f) {
+			if (Random.value < .05f) {
 				GameObject[] objs = GameObject.FindGameObjectsWithTag ("Barrier");
 				if (objs.Length > 0) {
 					Vector3 bar = objs [Mathf.FloorToInt (Random.Range (0, objs.Length))].transform.position;
@@ -46,8 +46,8 @@ public class InterferenceAI : MonoBehaviour
 					}
 				}
 				//If the player object has a path
-				if (closest.GetComponent<TestMovement> ().path != null) {
-					GridCoord[] path = closest.GetComponent<TestMovement> ().path.ToArray ();
+				if (closest.GetComponent<BasicMovement> ().path != null) {
+					GridCoord[] path = closest.GetComponent<BasicMovement> ().path.ToArray ();
 					//that is not empty
 					if (path.Length > 0) {
 						//get a random tile from that path
@@ -59,7 +59,7 @@ public class InterferenceAI : MonoBehaviour
 							Pathfinder.grid [location.x, location.y] = true;
 							//and update the paths for every player object
 							foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Player")) {
-								obj.GetComponent<TestMovement> ().getPath (GameObject.FindGameObjectWithTag ("Goal"));
+								obj.GetComponent<BasicMovement> ().getPath (GameObject.FindGameObjectWithTag ("Goal"));
 
 							}
 						}

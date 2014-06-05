@@ -22,7 +22,7 @@ public class ClickDrag : MonoBehaviour {
 	
 	}
 
-	void OnMouseUp(){
+	protected void OnMouseUp(){
 		if(holding){
 			holding = false;
 			thisHolding = false;

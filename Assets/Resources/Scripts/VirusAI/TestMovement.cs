@@ -13,7 +13,7 @@ public class TestMovement : MonoBehaviour
 	// Use this for initialization
 	void Start()
 	{
-		getPath(GameObject.FindGameObjectWithTag("Goal"));
+		//getPath(GameObject.FindGameObjectWithTag("Goal"));
 		foreach(GridCoord g in path) {
 			//Debug.Log(g.x + " " + g.y);
 		}
