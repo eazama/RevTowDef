@@ -12,6 +12,8 @@ public class MenuScript : MonoBehaviour {
 	public Texture2D instructions;
 	private bool creditsPressed = false;
 	private bool instructionsPressed = false;
+	public AudioSource audio;
+	public AudioClip clipSound;
 	int i = 0;
 	// Use this for initialization
 	void Start () {
@@ -26,11 +28,17 @@ public class MenuScript : MonoBehaviour {
 		circle.transform.eulerAngles = new Vector3 (0, 0, -i/2);
 	}
 
+	IEnumerator waitSeconds (){
+		yield return new WaitForSeconds(1.0f);
+		Application.LoadLevel ("LevelScene");
+	}
+
 	void OnGUI () {
 		GUI.backgroundColor = new Color(0,0,0,0);
 		if (!creditsPressed && !instructionsPressed) {
 			if (GUI.Button (new Rect (10, 5, sizeX, sizeY), playButton)) {
-					Application.LoadLevel ("LevelScene");
+				audio.PlayOneShot(clipSound);
+				StartCoroutine(waitSeconds());
 			}
 
 			if (GUI.Button (new Rect (10, sizeX / 2 + 30, sizeX, sizeY), howToPlayButton)) {

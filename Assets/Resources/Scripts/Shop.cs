@@ -57,6 +57,10 @@ public class Shop : MonoBehaviour
     //# of resources you have
     public static double cashCount;
 
+	//sound
+	public AudioSource audio;
+	public AudioClip clipSound;
+
 	void Awake () {
 		items [0] = "Basic Virus";
 		items [1] = "Wall Breaker";
@@ -66,7 +70,7 @@ public class Shop : MonoBehaviour
 		
 		itemsDescription [0] = "Cost: 5\n Basic virus that will head\n towards the corporation.";
 		itemsDescription [1] = "Cost: 50\n Heads towards the corporation\n while destroying all obstacles\n in its path.";
-		itemsDescription [2] = "Cost: 50\n Has more health than\n Basic Viruses.";
+		itemsDescription [2] = "Cost: 50\n Has more health than Basic\n Viruses but moves slower.";
 		itemsDescription [3] = "Cost: 200\n Passively accumilate resources\n for you. Click anywhere on the\n map to place.";
 		itemsDescription [4] = "Cost: 500\n When this virus is destroyed, it\n will destroy all turrents in its\n raduis.";
 		
@@ -144,6 +148,7 @@ public class Shop : MonoBehaviour
 		for (int i = 0; i<items.Length; i++) {
 			GUI.DrawTexture (new Rect (xitem, yitem + (i * between_items * hratio), litem_bg * wratio, witem_bg * hratio), Item_bg, ScaleMode.StretchToFill);
 			if (GUI.Button (new Rect (xitem, yitem + (i * between_items * hratio), litem_bg * wratio, witem_bg * hratio),new GUIContent( items [i], itemsDescription[i]), item_wording)){
+				audio.PlayOneShot(clipSound);
 				selected = i;
 				Debug.Log(i + "CLICKED");
 				VirusSpawner.spawn(i);
