@@ -15,9 +15,13 @@ public class VirusSpawner:MonoBehaviour{
 		case 1:
 			Debug.Log("SPAWNING Wallbreaker");
 			obj = Instantiate (Resources.Load("Prefabs/WallBreakVirus") ) as GameObject;
-			WallBreakerTarget tar = obj.GetComponent<WallBreakerTarget>();
+			break;
+		case 2:
+			Debug.Log("SPAWNING Bomber");
+			obj = Instantiate (Resources.Load ("Prefabs/BomberTarget")) as GameObject;
+			BomberTarget tar = obj.GetComponent<BomberTarget>();
 			tar.thisHolding = true;
-			WallBreakerTarget.holding = true;
+			BomberTarget.holding = true;
 			break;
 		}
 	}

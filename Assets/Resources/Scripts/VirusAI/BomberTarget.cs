@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class WallBreakerTarget : MonoBehaviour
+public class BomberTarget : MonoBehaviour
 {
 	public static bool holding = false;
 	public bool thisHolding = false;
@@ -38,9 +38,12 @@ public class WallBreakerTarget : MonoBehaviour
 	
 	void doTheThing ()
 	{
-		GameObject obj = Instantiate (Resources.Load ("Prefabs/WallBreakVirus"), new Vector3(0,0,0), new Quaternion()) as GameObject;
-		BreakerMovement move = obj.GetComponent<BreakerMovement> ();
-		move.getPath (this.gameObject);
+		if (!Pathfinder.grid [Mathf.RoundToInt (transform.position.x), Mathf.RoundToInt (transform.position.y)]) {
+			GameObject obj = Instantiate (Resources.Load ("Prefabs/BomberVirus"), new Vector3 (0, 0, 0), new Quaternion ()) as GameObject;
+			BomberMovement move = obj.GetComponent<BomberMovement> ();
+			move.dest = new GridCoord (Mathf.RoundToInt (transform.position.x), Mathf.RoundToInt (transform.position.y));
+			move.getPath (this.gameObject);
+		}
 		Destroy (this.gameObject);
 	}
 
