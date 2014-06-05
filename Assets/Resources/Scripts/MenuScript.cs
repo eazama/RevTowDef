@@ -43,13 +43,13 @@ public class MenuScript : MonoBehaviour {
 		}
 		else if (instructionsPressed) {
 			GUI.Label(new Rect(Screen.width / 2 - instructions.width / 2, 75, instructions.width, instructions.height), instructions);
-			if(GUI.Button(new Rect(Screen.width /2 + instructions.width / 2 - 80,130,50,50), xButton)){
+			if(GUI.Button(new Rect(Screen.width /2 + creditList.width / 2,140,50,50), xButton)){
 				instructionsPressed = false;
 			}
 		}
 		else if (creditsPressed) {
 			GUI.Label(new Rect(Screen.width / 2 - creditList.width / 2, 75, creditList.width, creditList.height), creditList);
-			if(GUI.Button(new Rect(Screen.width /2 + instructions.width / 2 - 80,130,50,50), xButton)){
+			if(GUI.Button(new Rect(Screen.width /2 + creditList.width / 2 - 80,130,50,50), xButton)){
 				creditsPressed = false;
 			}
 		}
