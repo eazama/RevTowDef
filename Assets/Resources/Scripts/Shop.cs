@@ -72,7 +72,7 @@ public class Shop : MonoBehaviour
 		itemsDescription [1] = "Cost: 50\n Heads towards the corporation\n while destroying all obstacles\n in its path.";
 		itemsDescription [2] = "Cost: 50\n Has more health than Basic\n Viruses but moves slower.";
 		itemsDescription [3] = "Cost: 200\n Passively accumilate resources\n for you. Click anywhere on the\n map to place.";
-		itemsDescription [4] = "Cost: 500\n When this virus is destroyed, it\n will destroy all turrents in its\n raduis.";
+		itemsDescription [4] = "Cost: 500\n When this virus is destroyed, it\n will destroy all turrents in its\n radius.";
 		
 		//itemsDescription [0] = "Cost: 5. Basic virus that will head towards the corporation.";
 	}

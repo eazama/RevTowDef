@@ -71,7 +71,7 @@ public class turretScript : MonoBehaviour
 
 	public void FireProjectile ()
 	{
-		//audio.Play();
+		audio.Play();
 		nextFireTime = Time.time + reloadTime;
 		nextMoveTime = Time.time + firePauseTime;
 
