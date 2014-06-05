@@ -3,7 +3,7 @@ using System.Collections;
 
 public class VirusBulletDetection : MonoBehaviour {
 
-	public int health = 5;
+	public int health;
 
 	public void OnTriggerEnter (Collider other)
 	{

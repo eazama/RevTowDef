@@ -25,21 +25,26 @@ public class VirusSpawner:MonoBehaviour{
 				break;
 			case 2:
 				if (Shop.cashCount >= 50) {
-					Debug.Log ("SPAWNING Bomber");
-					obj = Instantiate (Resources.Load ("Prefabs/BomberTarget")) as GameObject;
-					BomberTarget tar = obj.GetComponent<BomberTarget> ();
-					tar.thisHolding = true;
-					BomberTarget.holding = true;
-					Shop.cashCount = Shop.cashCount - 50;
+                    Debug.Log("SPAWNING Tank Virus");
+                    Instantiate(Resources.Load("Prefabs/TankVirus"));
+                    Shop.cashCount = Shop.cashCount - 50;
 				}
 				break;
 			case 3:
-				if (Shop.cashCount >= 60) {
+				if (Shop.cashCount >= 200) {
 					Debug.Log("SPAWNING Resource Tower");
 					Instantiate (Resources.Load("Prefabs/ResourceTower"));
-					Shop.cashCount = Shop.cashCount - 60;
+					Shop.cashCount = Shop.cashCount - 200;
 				}
 				break;
+            case 4:
+                if (Shop.cashCount >= 500)
+                {
+                    Debug.Log("SPAWNING Bomber");
+                    obj = Instantiate(Resources.Load("Prefabs/BomberVirus")) as GameObject;
+                    Shop.cashCount = Shop.cashCount - 500;
+                }
+                break;
 			}
 		}
 	}
