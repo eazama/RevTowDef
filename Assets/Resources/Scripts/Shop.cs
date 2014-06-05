@@ -27,6 +27,7 @@ public class Shop : MonoBehaviour
 	private float xitem = 0.0f;
 	private float yitem = 0.0f;
 	public string[] items;
+	public string[] itemsDescription;
 	public GUIStyle item_wording;
 
 	//selected button
@@ -55,6 +56,22 @@ public class Shop : MonoBehaviour
 
     //# of resources you have
     public static double cashCount;
+
+	void Awake () {
+		items [0] = "Basic Virus";
+		items [1] = "Wall Breaker";
+		items [2] = "Tank Virus";
+		items [3] = "Resource Tower";
+		items [4] = "Bomb Virus";
+		
+		itemsDescription [0] = "Cost: 5\n Basic virus that will head\n towards the corporation.";
+		itemsDescription [1] = "Cost: 50\n Heads towards the corporation\n while destroying all obstacles\n in its path.";
+		itemsDescription [2] = "Cost: 50\n Has more health than\n Basic Viruses.";
+		itemsDescription [3] = "Cost: 200\n Passively accumilate resources\n for you. Click anywhere on the\n map to place.";
+		itemsDescription [4] = "Cost: 500\n When this virus is destroyed, it\n will destroy all turrents in its\n raduis.";
+		
+		//itemsDescription [0] = "Cost: 5. Basic virus that will head towards the corporation.";
+	}
 
 	// Use this for initialization
 	void Start ()
@@ -126,7 +143,7 @@ public class Shop : MonoBehaviour
 		GUI.DrawTexture (new Rect(0,0,Screen.width,Screen.height),Background,ScaleMode.StretchToFill);
 		for (int i = 0; i<items.Length; i++) {
 			GUI.DrawTexture (new Rect (xitem, yitem + (i * between_items * hratio), litem_bg * wratio, witem_bg * hratio), Item_bg, ScaleMode.StretchToFill);
-			if (GUI.Button (new Rect (xitem, yitem + (i * between_items * hratio), litem_bg * wratio, witem_bg * hratio), items [i], item_wording)){
+			if (GUI.Button (new Rect (xitem, yitem + (i * between_items * hratio), litem_bg * wratio, witem_bg * hratio),new GUIContent( items [i], itemsDescription[i]), item_wording)){
 				selected = i;
 				Debug.Log(i + "CLICKED");
 				VirusSpawner.spawn(i);
@@ -138,10 +155,13 @@ public class Shop : MonoBehaviour
 
 		//current selected
 
-		GUI.Box (new Rect (560 * wratio, 350 * hratio, wratio, hratio), "Item: " + items [selected], item_wording);
-
+		GUI.Box (new Rect (560 * wratio+35, 350 * hratio+30, wratio, hratio), "Item: " + items [selected], item_wording);
+		
 		//draws cash
-		GUI.Label(new Rect(560 * wratio - 70, 350 * hratio - 30, 100, 20), "Cash : " + cashCount.ToString("##0.00"));
+		GUI.Label(new Rect(560 * wratio - 40, 350 * hratio , 100, 20), "Cash : " + cashCount.ToString("##0.00"), item_wording);
+
+		//draws the item description
+		GUI.Label (new Rect (Screen.width-235,200 * hratio,200,200), GUI.tooltip, "box");
 	}
 
 }
