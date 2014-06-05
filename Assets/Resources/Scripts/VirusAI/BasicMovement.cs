@@ -14,10 +14,6 @@ public class BasicMovement : MonoBehaviour
 	void Start()
 	{
 		getPath(GameObject.FindGameObjectWithTag("Goal"));
-		foreach(GridCoord g in path) {
-			//Debug.Log(g.x + " " + g.y);
-		}
-
 	}
 	
 	// Update is called once per frame

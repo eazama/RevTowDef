@@ -11,16 +11,6 @@ public class BomberMovement : MonoBehaviour
 	GridCoord target = new GridCoord (0, 0);
 	public GridCoord dest = new GridCoord (0, 0);
 	
-	// Use this for initialization
-	void Start ()
-	{
-		//getPath(GameObject.FindGameObjectWithTag("Goal"));
-		foreach (GridCoord g in path) {
-			//Debug.Log(g.x + " " + g.y);
-		}
-
-	}
-	
 	// Update is called once per frame
 	void Update ()
 	{
@@ -41,8 +31,10 @@ public class BomberMovement : MonoBehaviour
 		}
 		//if the object is not moving and has no more positions on the path
 		if (!moving && path.Count == 0) {
+			//For each position around the virus
 			foreach (int i in new int[] {-1,0,1}) {
 				foreach (int j in new int[] {-1,0,1}) {
+					//destroy any walls
 					if (Pathfinder.grid [Mathf.RoundToInt (target.x + i), Mathf.RoundToInt (target.y + j)]) {
 						Pathfinder.grid [Mathf.RoundToInt (target.x + i), Mathf.RoundToInt (target.y + j)] = false;
 						foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Barrier")) {
@@ -50,6 +42,7 @@ public class BomberMovement : MonoBehaviour
 								Destroy (obj);
 							}
 						}
+						//delete any turrets
 						foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Turret")) {
 							if (obj.transform.position.x == target.x + i && obj.transform.position.y == target.y + j) {
 								Destroy (obj);

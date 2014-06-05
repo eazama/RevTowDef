@@ -9,7 +9,7 @@ public class VirusSpawner:MonoBehaviour{
 		case 0:
 			Debug.Log("SPAWNING BASIC");
 			obj = Instantiate (Resources.Load("Prefabs/BasicVirus")) as GameObject;
-			TestMovement move = obj.GetComponent<TestMovement>();
+			BasicMovement move = obj.GetComponent<BasicMovement>();
 			move.getPath (GameObject.FindGameObjectWithTag("Goal"));
 			break;
 		case 1:

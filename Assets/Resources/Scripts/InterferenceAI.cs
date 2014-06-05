@@ -14,28 +14,33 @@ public class InterferenceAI : MonoBehaviour
 	{
 		while (true) {
 			Debug.Log ("Place()");
+			//random chance to place a turret
 			if (Random.value < .05f) {
+				//if there is at least one barrier
 				GameObject[] objs = GameObject.FindGameObjectsWithTag ("Barrier");
 				if (objs.Length > 0) {
+					//get the position of a random one
 					Vector3 bar = objs [Mathf.FloorToInt (Random.Range (0, objs.Length))].transform.position;
+					//get the current turrets
 					GameObject[] turrets = GameObject.FindGameObjectsWithTag ("Turret");
 					Vector3 pos = new Vector3 (bar.x, bar.y, 0);
 					bool doSpawn = true;
 					foreach (GameObject obj in turrets) {
+						//if there is already a turrent in that position
 						if (obj.transform.position.Equals (pos)) {
+							//don't spawn a new one
 							doSpawn = false;
 							break;
 						}
 					}
+					//otherwise, spawn it
 					if (doSpawn) {
 						Instantiate (Resources.Load ("Prefabs/Turret"), new Vector3 (bar.x, bar.y, 0), new Quaternion ());
 					}
 				}
 			}
 
-
-
-			//Get an object tagged with "Player
+			//Get an object tagged with "Player"
 			GameObject closest = GameObject.FindGameObjectWithTag ("Player");
 			//As long as there is one "Player" object
 			if (closest != null) {

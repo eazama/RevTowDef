@@ -19,7 +19,6 @@ public static class DirectPathfinder
 		toExpand.Add (start);
 		GridCoord cell = nextCell ();
 		while (cell != null && !cell.Equals ( finish)) {
-			//Debug.Log ("expanding " + nextCell ().x + " " + nextCell ().y);
 			expandCoord (nextCell (), finish);
 			cell = nextCell ();
 		}

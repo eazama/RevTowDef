@@ -14,10 +14,6 @@ public class BreakerMovement : MonoBehaviour
 	void Start()
 	{
 		getPath(GameObject.FindGameObjectWithTag("Goal"));
-		foreach(GridCoord g in path) {
-			//Debug.Log(g.x + " " + g.y);
-		}
-
 	}
 	
 	// Update is called once per frame
@@ -60,13 +56,16 @@ public class BreakerMovement : MonoBehaviour
 
 	public IEnumerator Move(Vector3 from, Vector3 to)
 	{
+		//if the target space is a wall
 		if(Pathfinder.grid[Mathf.RoundToInt(to.x), Mathf.RoundToInt(to.y)]){
 			Pathfinder.grid[Mathf.RoundToInt(to.x), Mathf.RoundToInt(to.y)] = false;
+			//destroy the wall
 			foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Barrier")){
 				if(obj.transform.position.x == to.x && obj.transform.position.y == to.y){
 					Destroy (obj);
 				}
 			}
+			//destroy any turret over it
 			foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Turret")){
 				if(obj.transform.position.x == to.x && obj.transform.position.y == to.y){
 					Destroy (obj);
