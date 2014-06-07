@@ -39,7 +39,7 @@ public static class DirectPathfinder
 			foreach (int j in new int[]{-1, 0, 1}) {
 				next = new GridCoord (Mathf.Clamp (coord.x + i, 0, width - 1), Mathf.Clamp (coord.y + j, 0, length - 1), coord);
 				next.distance (finish);
-				if (!visited.Contains (next))
+				if (!visited.Contains (next) && !toExpand.Contains(next))
 					toExpand.Add (next);
 			}
 		}

@@ -54,7 +54,6 @@ public static class Pathfinder
 	{
 		visited.Add (coord);
 		toExpand.Remove (coord);
-		Debug.Log ("expanding " + coord.x + " " + coord.y);
 		GridCoord next;
 		foreach (int i in new int[]{-1, 0, 1}) {
 			foreach (int j in new int[]{-1, 0, 1}) {
