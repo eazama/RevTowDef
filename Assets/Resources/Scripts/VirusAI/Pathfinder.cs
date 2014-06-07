@@ -54,13 +54,13 @@ public static class Pathfinder
 	{
 		visited.Add (coord);
 		toExpand.Remove (coord);
-
+		Debug.Log ("expanding " + coord.x + " " + coord.y);
 		GridCoord next;
 		foreach (int i in new int[]{-1, 0, 1}) {
 			foreach (int j in new int[]{-1, 0, 1}) {
 				next = new GridCoord (Mathf.Clamp (coord.x + i, 0, width - 1), Mathf.Clamp (coord.y + j, 0, length - 1), coord);
 				next.distance (finish);
-				if (!grid [next.x, next.y] && !visited.Contains (next))
+				if (!grid [next.x, next.y] && !visited.Contains (next) && !toExpand.Contains(next))
 					toExpand.Add (next);
 			}
 		}

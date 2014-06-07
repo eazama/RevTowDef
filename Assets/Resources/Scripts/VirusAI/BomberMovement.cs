@@ -10,7 +10,13 @@ public class BomberMovement : AbstractMovement
 	public Stack<GridCoord> path;
 	GridCoord target = new GridCoord (0, 0);
 	public GridCoord dest = new GridCoord (0, 0);
-	
+
+	// Use this for initialization
+	void Start()
+	{
+		getPath(GameObject.FindGameObjectWithTag("Goal"));
+	}
+
 	// Update is called once per frame
 	void Update ()
 	{

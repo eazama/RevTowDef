@@ -69,11 +69,12 @@ public class MazeAI : MonoBehaviour
 	private void placeWall(GridCoord coord){
 		(Instantiate (Resources.Load ("Prefabs/Barrier"), new Vector3 (coord.x, coord.y, 1), new Quaternion ()) as GameObject).transform.eulerAngles = new Vector3 (0, 180, 0);
 		Pathfinder.grid [coord.x, coord.y] = true;
+		/*
 		foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Player")){
 			AbstractMovement move = obj.GetComponent<AbstractMovement>();
 			if(move != null){
 				move.getPath(GameObject.FindGameObjectWithTag("Goal"));
 			}
-		}
+		}*/
 	}
 }
