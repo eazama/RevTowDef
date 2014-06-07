@@ -46,11 +46,11 @@ public class VirusSpawner:MonoBehaviour{
                 }
                 break;
 			case 5:
-				if (Shop.cashCount >= 5)
+				if (Shop.cashCount >= 1000)
 				{
 					Debug.Log("SPAWNING juggernaut");
 					obj = Instantiate(Resources.Load("Prefabs/JuggernautVirus")) as GameObject;
-					Shop.cashCount = Shop.cashCount - 5;
+					Shop.cashCount = Shop.cashCount - 1000;
 				}
 				break;
 			}

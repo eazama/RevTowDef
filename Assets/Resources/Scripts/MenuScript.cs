@@ -50,7 +50,7 @@ public class MenuScript : MonoBehaviour {
 			}
 		}
 		else if (instructionsPressed) {
-			GUI.skin = defaultSkin;
+			GUI.skin = null;
 			GUI.backgroundColor = new Color(0,0,0,0);
 			GUI.Label(new Rect(Screen.width / 2 - instructions.width / 2, 75, instructions.width, instructions.height), instructions);
 			if(GUI.Button(new Rect(Screen.width /2 + creditList.width / 2,140,50,50), xButton)){
