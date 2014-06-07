@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BreakerMovement : MonoBehaviour
+public class BreakerMovement : AbstractMovement
 {
 	int breakcount;
 	float speed = 3.5f;
@@ -49,7 +49,7 @@ public class BreakerMovement : MonoBehaviour
 	}
 	
 	
-	public void getPath(GameObject goal)
+	public override void getPath(GameObject goal)
 	{
 		//starting grid coordinate (current x/y rounded)
 		GridCoord start = new GridCoord(Mathf.RoundToInt(target.x),

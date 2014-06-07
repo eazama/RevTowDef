@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class juggernautMovement : MonoBehaviour {
+public class juggernautMovement : AbstractMovement {
 
 	float speed = 2.9f;
 	bool moving = false;
@@ -12,8 +12,8 @@ public class juggernautMovement : MonoBehaviour {
 	// Use this for initialization
 	void Start()
 	{
-		//getPath(GameObject.FindGameObjectWithTag("Goal"));
-		getPath(GameObject.FindGameObjectWithTag("Barrier"));
+		getPath(GameObject.FindGameObjectWithTag("Goal"));
+		//getPath(GameObject.FindGameObjectWithTag("Barrier"));
 	}
 	
 	// Update is called once per frame
@@ -45,7 +45,7 @@ public class juggernautMovement : MonoBehaviour {
 	}
 	
 	
-	public void getPath(GameObject goal)
+	public override void getPath(GameObject goal)
 	{
 		//starting grid coordinate (current x/y rounded)
 		GridCoord start = new GridCoord(Mathf.RoundToInt(target.x),

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BasicMovement : MonoBehaviour
+public class BasicMovement : AbstractMovement
 {
 
 	float speed = 3.5f;
@@ -42,7 +42,7 @@ public class BasicMovement : MonoBehaviour
 	}
 
 
-	public void getPath(GameObject goal)
+	public override void getPath(GameObject goal)
 	{
 		//starting grid coordinate (current x/y rounded)
 		GridCoord start = new GridCoord(Mathf.RoundToInt(target.x),

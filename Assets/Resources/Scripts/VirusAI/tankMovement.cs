@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class tankMovement : MonoBehaviour {
+public class tankMovement : AbstractMovement {
     float speed = 1.9f;
     bool moving = false;
     public Stack<GridCoord> path;
@@ -47,7 +47,7 @@ public class tankMovement : MonoBehaviour {
     }
 
 
-    public void getPath(GameObject goal)
+    public override void getPath(GameObject goal)
     {
         //starting grid coordinate (current x/y rounded)
         GridCoord start = new GridCoord(Mathf.RoundToInt(target.x),

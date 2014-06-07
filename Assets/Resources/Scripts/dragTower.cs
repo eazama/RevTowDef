@@ -31,6 +31,7 @@ public class dragTower : MonoBehaviour {
         {
             holding = false;
             thisHolding = false;
+			Destroy (this);
            // doTheThing();
         }
         else
