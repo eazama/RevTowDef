@@ -41,6 +41,8 @@ public class tankMovement : AbstractMovement {
         //if the object is not moving and has no more positions on the path
         if (!moving && path.Count == 0)
         {
+            Shop.cashCount = Shop.cashCount + 75;
+            Shop.corpHealth = Shop.corpHealth - 3; ;
             //destroy it
             Destroy(gameObject);
         }

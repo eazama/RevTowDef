@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class juggernautMovement : AbstractMovement {
 
 	float speed = 2.9f;
-	bool moving = false;
-	public Stack<GridCoord> path;
+    bool moving = false;
+    public Stack<GridCoord> path;
 	GridCoord target = new GridCoord(0, 0);
 	
 	// Use this for initialization
@@ -39,6 +39,7 @@ public class juggernautMovement : AbstractMovement {
 		if (!moving && path.Count == 0)
 		{
 			Shop.cashCount=Shop.cashCount+500;//viruses reaching the goal increase money
+            Shop.corpHealth = Shop.corpHealth - 50; //dals massive damage
 			//destroy it
 			Destroy(gameObject);
 		}

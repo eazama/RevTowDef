@@ -4,6 +4,7 @@ using System.Collections;
 public class resourceTower : MonoBehaviour {
 
     public bool waitActive;
+    public int health = 3;
 
 	// Use this for initialization
 	void Start () {
@@ -28,4 +29,15 @@ public class resourceTower : MonoBehaviour {
         waitActive = false;
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Projectile")
+        {
+            Destroy(other.gameObject);
+            if (--health <= 0)
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
 }

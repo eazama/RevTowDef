@@ -6,8 +6,10 @@ public class BreakerMovement : AbstractMovement
 {
 	int breakcount;
 	float speed = 3.5f;
-	bool moving = false;
-	public Stack<GridCoord> path;
+    public int virusSuccess;
+    public int successNeeded;
+    bool moving = false;
+    public Stack<GridCoord> path;
 	GridCoord target = new GridCoord(0,0);
 	
 	// Use this for initialization
@@ -41,10 +43,11 @@ public class BreakerMovement : AbstractMovement
 		}
 		//if the object is not moving and has no more positions on the path
 		if(!moving && path.Count == 0){
-			//destroy it
-			Shop.cashCount=Shop.cashCount+50;//viruses reaching the goal increase money
-			//GetComponent<Shop>().cashCount++;
-			Destroy(gameObject);
+            Shop.corpHealth = Shop.corpHealth - 2; ;
+                Shop.cashCount = Shop.cashCount + 50;//viruses reaching the goal increase money
+                //GetComponent<Shop>().cashCount++;
+            //destroy it
+            Destroy(gameObject);
 		}
 	}
 	
@@ -70,7 +73,7 @@ public class BreakerMovement : AbstractMovement
 			//destroy the wall
 			foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Barrier")){
 				if(obj.transform.position.x == to.x && obj.transform.position.y == to.y){
-					Shop.corpHealth--;
+					//Shop.corpHealth--;
 					Destroy (obj);	
 					breakcount++;
 				}
@@ -78,7 +81,7 @@ public class BreakerMovement : AbstractMovement
 			//destroy any turret over it
 			foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Turret")){
 				if(obj.transform.position.x == to.x && obj.transform.position.y == to.y){
-					Shop.corpHealth--;
+					//Shop.corpHealth--;
 					Destroy (obj);
 				}
 			}

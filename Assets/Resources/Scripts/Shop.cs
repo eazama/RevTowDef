@@ -3,6 +3,12 @@ using System.Collections;
 
 public class Shop : MonoBehaviour
 {
+    //match Results
+    public int numberOfTowers;
+    public GameObject[] towers;
+    public int numberOfViruses;
+    public GameObject[] virues;
+
 	//shop textures
 	public Texture2D Background;
 	public Texture2D Overlap;
@@ -83,10 +89,11 @@ public class Shop : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+
 		//GameObject breakermovement = GameObject.Find("BreakerMovement").GetComponent<BreakerMovement>();
 		scrolling_length = (witem_bg + between_items) * (items.Length);
 		
-		cashCount = 150.00;
+		cashCount = 20.00;
 		corpHealth = 100;
 		
 		//set resolution
@@ -106,6 +113,15 @@ public class Shop : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+        //finds all of the towers and viruses on the scene
+        towers = GameObject.FindGameObjectsWithTag("Tower");
+        numberOfTowers = towers.Length;
+        virues = GameObject.FindGameObjectsWithTag("Player");
+        numberOfViruses = virues.Length;
+
+        //Debug.Log("number of vtowers = " + numberOfTowers);
+        //Debug.Log("number of viruses = " + numberOfViruses);
+
 		ScrollButtonMove ();
 		ScrollItems ();	
 	}
@@ -175,6 +191,30 @@ public class Shop : MonoBehaviour
 		GUI.Label(new Rect(560 * wratio - 10, 365 * hratio , 100, 20), corpHealth+" Bajillion $", item_wording);
 		//draws the item description
 		GUI.Label (new Rect (560*wratio-40,200 * hratio,130*hratio,130*hratio), GUI.tooltip, "box");
+
+        if (Shop.corpHealth <= 0)
+        {
+            GUI.Label(new Rect(Screen.width * 0.5f - 120, Screen.height * 0.5f - 40, 300, 50), "You Win!");
+            GUI.Label(new Rect(Screen.width * 0.5f - 120, Screen.height * 0.5f - 5, 300, 50), "The company has just gone bankrupt!");
+            Debug.Log("it works, you won");
+            if (GUI.Button(new Rect(Screen.width / 2 - 85, Screen.height / 2 + 60, 170, 60), "Play Again?"))
+            {
+                Application.LoadLevel("LevelScene");
+            }
+
+        }
+
+        if (numberOfTowers <= 0 && numberOfViruses <= 0 && Shop.cashCount < 5 )
+        {
+            GUI.Label(new Rect(Screen.width * 0.5f - 120, Screen.height * 0.5f - 40, 300, 50), "You can no longer generate money!");
+            GUI.Label(new Rect(Screen.width * 0.5f - 120, Screen.height * 0.5f - 5, 300, 50), "You Lose!");
+            Debug.Log("it works, you lost");
+            if (GUI.Button(new Rect(Screen.width / 2 - 85, Screen.height / 2 + 60, 170, 60), "Play Again?"))
+            {
+                Application.LoadLevel("LevelScene");
+            }
+        }
+    
 	}
 	
 }

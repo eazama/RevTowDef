@@ -4,10 +4,9 @@ using System.Collections.Generic;
 
 public class BasicMovement : AbstractMovement
 {
-
 	float speed = 3.5f;
-	bool moving = false;
-	public Stack<GridCoord> path;
+    bool moving = false;
+	public  Stack<GridCoord> path;
 	GridCoord target = new GridCoord(0,0);
 	
 	// Use this for initialization
@@ -35,10 +34,13 @@ public class BasicMovement : AbstractMovement
 			                                                               gameObject.transform.position.z)));
 		}
 		//if the object is not moving and has no more positions on the path
-		if(!moving && path.Count == 0){
-			//destroy it
-			Destroy(gameObject);
-		}
+        if (!moving && path.Count == 0)
+        {
+            Shop.corpHealth--;
+            Shop.cashCount = Shop.cashCount + 25;
+            //destroy it
+            Destroy(gameObject);
+        }
 	}
 
 
