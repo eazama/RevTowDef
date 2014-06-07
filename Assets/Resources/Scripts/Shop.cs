@@ -8,39 +8,39 @@ public class Shop : MonoBehaviour
 	public Texture2D Overlap;
 	public Texture2D Item_bg;
 	public Texture2D Button;
-		
+	
 	//dinamic resolution
 	private float wratio = 0.0f;
 	private float hratio = 0.0f;
-
-	//quick fix for initial select value print
-	//bool select = false;
-
+	
 	//moving button
 	private float xbutton = 0.0f;
 	private float ybutton = 0.0f;
 	private bool moving = false;
 	private float old_button = 0;
 	private float yold = 0;
-
+	
 	//moving items
 	private float xitem = 0.0f;
 	private float yitem = 0.0f;
 	public string[] items;
 	public string[] itemsDescription;
 	public GUIStyle item_wording;
-
+	public GUIStyle description_wording;
+	public GUIStyle textLabels;
+	public GUISkin mySkin;
+	
 	//selected button
 	int selected;
-
+	
 	//scrollbutton variables
 	int wscroll = 15;
 	int hscroll = 30;
-
+	
 	//lock scrolling within fixed area
 	int toplock = 26;
 	int botlock = 160;
-
+	
 	//how far the scroll goes through the scrolling_length
 	int scrolling = 263;
 	//item length & width
@@ -53,43 +53,48 @@ public class Shop : MonoBehaviour
 	int xitem_value = 530;
 	//length of all items to scroll through
 	int scrolling_length;
-
-    //# of resources you have
-    public static double cashCount;
-
+	
+	//# of resources you have
+	public static double cashCount;
+	
+	//enemy health
+	public static float corpHealth;
+	
 	//sound
 	public AudioSource audio;
 	public AudioClip clipSound;
-
+	
 	void Awake () {
 		items [0] = "Basic Virus";
 		items [1] = "Wall Breaker";
 		items [2] = "Tank Virus";
 		items [3] = "Resource Tower";
 		items [4] = "Bomb Virus";
+		items [5] = "Juggernaut";
 		
-		itemsDescription [0] = "Cost: 5\n Basic virus that will head\n towards the corporation.";
-		itemsDescription [1] = "Cost: 50\n Heads towards the corporation\n while destroying all obstacles\n in its path.";
-		itemsDescription [2] = "Cost: 50\n Has more health than Basic\n Viruses but moves slower.";
-		itemsDescription [3] = "Cost: 200\n Passively accumilate resources\n for you. Click anywhere on the\n map to place.";
-		itemsDescription [4] = "Cost: 500\n When this virus is destroyed, it\n will destroy all turrents in its\n radius.";
-		
-		//itemsDescription [0] = "Cost: 5. Basic virus that will head towards the corporation.";
+		itemsDescription [0] = "Cost: 5\nBasic virus that will head towards the corporation.";
+		itemsDescription [1] = "Cost: 50\nHeads towards the corporation while destroying up to 3 obstacles in its path.";
+		itemsDescription [2] = "Cost: 50\nHas more health than Basic Viruses but moves slower.";
+		itemsDescription [3] = "Cost: 200\nPassively accumilate resources for you. Double-Click anywhere on the map to place.";
+		itemsDescription [4] = "Cost: 500\nWhen this virus is destroyed, it will destroy all obstacles in its radius.";
+		itemsDescription [5] = "Cost: 1000\nThis beast will go straight for the goal.";
 	}
-
+	
 	// Use this for initialization
 	void Start ()
 	{
+		//GameObject breakermovement = GameObject.Find("BreakerMovement").GetComponent<BreakerMovement>();
 		scrolling_length = (witem_bg + between_items) * (items.Length);
-
-        cashCount = 150.00;
-
+		
+		cashCount = 150.00;
+		corpHealth = 100;
+		
 		//set resolution
 		wratio = Screen.width;
 		hratio = Screen.height;
 		wratio = wratio / 700;
 		hratio = hratio / 400;
-
+		
 		//starting scroll button position
 		xbutton = 660 * wratio;
 		ybutton = toplock * hratio;
@@ -104,7 +109,7 @@ public class Shop : MonoBehaviour
 		ScrollButtonMove ();
 		ScrollItems ();	
 	}
-
+	
 	void ScrollButtonMove ()
 	{
 		//checks if click is in range of the button texture
@@ -133,7 +138,7 @@ public class Shop : MonoBehaviour
 			moving = false;
 		
 	}
-
+	
 	void ScrollItems ()
 	{
 		//scroll area
@@ -141,32 +146,35 @@ public class Shop : MonoBehaviour
 		//get scrolling length
 		yitem = (yitem_value * hratio) + (items_length * ((ybutton - (toplock * hratio)) / ((scrolling - toplock) * hratio)));
 	}
-
+	
 	void OnGUI ()
 	{
+		GUI.skin = mySkin;
 		GUI.DrawTexture (new Rect(0,0,Screen.width,Screen.height),Background,ScaleMode.StretchToFill);
 		for (int i = 0; i<items.Length; i++) {
 			GUI.DrawTexture (new Rect (xitem, yitem + (i * between_items * hratio), litem_bg * wratio, witem_bg * hratio), Item_bg, ScaleMode.StretchToFill);
-			if (GUI.Button (new Rect (xitem, yitem + (i * between_items * hratio), litem_bg * wratio, witem_bg * hratio),new GUIContent( items [i], itemsDescription[i]), item_wording)){
+			if (GUI.Button (new Rect (xitem, yitem + (i * between_items * hratio), litem_bg * wratio, witem_bg * hratio),new GUIContent( items [i], itemsDescription[i]), "button")){
 				audio.PlayOneShot(clipSound);
 				selected = i;
 				Debug.Log(i + "CLICKED");
 				VirusSpawner.spawn(i);
 			}
-
+			
 		}
 		GUI.DrawTexture (new Rect (0, 0, Screen.width, Screen.height), Overlap, ScaleMode.StretchToFill);
 		GUI.DrawTexture (new Rect (xbutton, ybutton, wscroll * wratio, hscroll * hratio), Button, ScaleMode.StretchToFill);
-
+		
 		//current selected
-
-		GUI.Box (new Rect (560 * wratio+35, 350 * hratio+30, wratio, hratio), "Item: " + items [selected], item_wording);
+		//GUI.Box (new Rect (560 * wratio+35, 350 * hratio+30, wratio, hratio), "Item: " + items [selected], item_wording);
 		
 		//draws cash
-		GUI.Label(new Rect(560 * wratio - 40, 350 * hratio , 100, 20), "Cash : " + cashCount.ToString("##0.00"), item_wording);
-
+		GUI.Label(new Rect(560 * wratio - 25, 335 * hratio , 100, 20), "Cash : " + cashCount.ToString("##0.00"), item_wording);
+		
+		//draw corp health
+		GUI.Label(new Rect(560 * wratio - 20, 355 * hratio , 100, 20), "Corp Health" , item_wording);
+		GUI.Label(new Rect(560 * wratio - 10, 365 * hratio , 100, 20), corpHealth+" Bajillion $", item_wording);
 		//draws the item description
-		GUI.Label (new Rect (Screen.width-235,200 * hratio,200,200), GUI.tooltip, "box");
+		GUI.Label (new Rect (560*wratio-40,200 * hratio,130*hratio,130*hratio), GUI.tooltip, "box");
 	}
-
+	
 }

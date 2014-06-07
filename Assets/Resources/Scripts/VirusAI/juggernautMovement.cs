@@ -2,48 +2,44 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class BreakerMovement : MonoBehaviour
-{
-	int breakcount;
-	float speed = 3.5f;
+public class juggernautMovement : MonoBehaviour {
+
+	float speed = 2.9f;
 	bool moving = false;
 	public Stack<GridCoord> path;
-	GridCoord target = new GridCoord(0,0);
+	GridCoord target = new GridCoord(0, 0);
 	
 	// Use this for initialization
 	void Start()
 	{
-		breakcount = 0;
-		getPath(GameObject.FindGameObjectWithTag("Goal"));
+		//getPath(GameObject.FindGameObjectWithTag("Goal"));
+		getPath(GameObject.FindGameObjectWithTag("Barrier"));
 	}
 	
 	// Update is called once per frame
 	void Update()
 	{
 		//If the object is not mving and has a path remaining
-		if(!moving && path.Count > 0) {
+		if (!moving && path.Count > 0)
+		{
 			//get the next position
 			target = path.Pop();
 			//calculate the angle between the object and target
 			float dY = target.y - transform.position.y;
 			float dX = target.x - transform.position.x;
-			float angle = Mathf.Atan2(dY,dX) *180 /Mathf.PI;
+			float angle = Mathf.Atan2(dY, dX) * 180 / Mathf.PI;
 			//rotate the object to face the direction of movement
-			transform.eulerAngles = new Vector3(0,0,angle-90);
+			transform.eulerAngles = new Vector3(0, 0, angle - 90);
 			//start the object moving
 			StartCoroutine(Move(gameObject.transform.position, new Vector3(target.x,
 			                                                               target.y,
 			                                                               gameObject.transform.position.z)));
 		}
-		//limit wall breaker
-		if(breakcount==3){
-			Destroy(gameObject);
-		}
 		//if the object is not moving and has no more positions on the path
-		if(!moving && path.Count == 0){
+		if (!moving && path.Count == 0)
+		{
+			Shop.cashCount=Shop.cashCount+500;//viruses reaching the goal increase money
 			//destroy it
-			Shop.cashCount=Shop.cashCount+50;//viruses reaching the goal increase money
-			//GetComponent<Shop>().cashCount++;
 			Destroy(gameObject);
 		}
 	}
@@ -58,12 +54,11 @@ public class BreakerMovement : MonoBehaviour
 		GridCoord finish = new GridCoord(Mathf.RoundToInt(goal.transform.position.x),
 		                                 Mathf.RoundToInt(goal.transform.position.y));
 		//get a path from the pathfinder
-		path = DirectPathfinder.FindPath(start, finish);
+		path = Pathfinder.FindPath(start, finish);
 	}
 	
 	public IEnumerator Move(Vector3 from, Vector3 to)
 	{
-		
 		//if the target space is a wall
 		if(Pathfinder.grid[Mathf.RoundToInt(to.x), Mathf.RoundToInt(to.y)]){
 			Pathfinder.grid[Mathf.RoundToInt(to.x), Mathf.RoundToInt(to.y)] = false;
@@ -71,8 +66,7 @@ public class BreakerMovement : MonoBehaviour
 			foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Barrier")){
 				if(obj.transform.position.x == to.x && obj.transform.position.y == to.y){
 					Shop.corpHealth--;
-					Destroy (obj);	
-					breakcount++;
+					Destroy (obj);
 				}
 			}
 			//destroy any turret over it
@@ -86,7 +80,8 @@ public class BreakerMovement : MonoBehaviour
 		//indicate the object is moving
 		moving = true;
 		//????
-		if(from.Equals(to)) {
+		if (from.Equals(to))
+		{
 			moving = false;
 			yield break;
 		}
@@ -95,7 +90,8 @@ public class BreakerMovement : MonoBehaviour
 		//get the distance between the two points
 		float dist = Vector3.Distance(from, to);
 		//while the object has not arrived
-		while(gameObject.rigidbody.position != to) {
+		while (gameObject.rigidbody.position != to)
+		{
 			//calculate how far along the object has moved
 			float timePassed = (Time.time - startTime) * speed;
 			//set the position to the point between the start and end points
