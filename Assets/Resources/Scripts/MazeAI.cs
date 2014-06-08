@@ -11,28 +11,19 @@ public class MazeAI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-<<<<<<< HEAD
-=======
 		//gets gamecontroller for start bool
 		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
 		if (gameControllerObject != null) {
 			gameController = gameControllerObject.GetComponent <GameController>();
 		}
 		StreamReader sr = new StreamReader(Application.dataPath + "/" + "maze1.txt");
->>>>>>> FETCH_HEAD
 		string line = "";
 		string[] sline;
-		TextAsset mazetext = (TextAsset)Resources.Load ("maze1", typeof(TextAsset));
-		StringReader reader = new StringReader(mazetext.text);
-		if(reader == null){
-			Debug.Log("Error reading maze");
-		} else{
-			while((line = reader.ReadLine ()) != null){
-				sline = line.Split(" ".ToCharArray());
-				maze.Add(new GridCoord(int.Parse(sline[0]), int.Parse(sline[1])));
-			}
+		while((line = sr.ReadLine()) != null){
+			sline = line.Split(" ".ToCharArray());
+			maze.Add(new GridCoord(int.Parse(sline[0]), int.Parse(sline[1])));
 		}
-
+		Debug.Log(maze.Count);
 		StartCoroutine (Place ());
 	}
 
