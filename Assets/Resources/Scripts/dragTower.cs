@@ -2,9 +2,8 @@
 using System.Collections;
 
 public class dragTower : MonoBehaviour {
-    public static bool holding = false;
-    public bool thisHolding = false;
-    public bool placed = false;
+    public static bool holding = true;
+    public bool thisHolding = true;
 
 	//game controller
 	public GameController gameController;
@@ -47,7 +46,6 @@ public class dragTower : MonoBehaviour {
         {
             holding = true;
             thisHolding = true;
-            // placed = true;
         }
     }
 
