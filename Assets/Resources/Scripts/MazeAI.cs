@@ -10,14 +10,19 @@ public class MazeAI : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		StreamReader sr = new StreamReader(Application.dataPath + "/" + "maze1.txt");
 		string line = "";
 		string[] sline;
-		while((line = sr.ReadLine()) != null){
-			sline = line.Split(" ".ToCharArray());
-			maze.Add(new GridCoord(int.Parse(sline[0]), int.Parse(sline[1])));
+		TextAsset mazetext = (TextAsset)Resources.Load ("maze1", typeof(TextAsset));
+		StringReader reader = new StringReader(mazetext.text);
+		if(reader == null){
+			Debug.Log("Error reading maze");
+		} else{
+			while((line = reader.ReadLine ()) != null){
+				sline = line.Split(" ".ToCharArray());
+				maze.Add(new GridCoord(int.Parse(sline[0]), int.Parse(sline[1])));
+			}
 		}
-		Debug.Log(maze.Count);
+
 		StartCoroutine (Place ());
 	}
 
