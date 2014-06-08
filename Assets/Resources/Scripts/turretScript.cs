@@ -44,7 +44,8 @@ public class turretScript : MonoBehaviour
 
 	public void OnTriggerEnter (Collider other)
 	{
-		if (myTarget == null && other.gameObject.tag == "Player") {
+        if (myTarget == null && other.gameObject.tag == "Player" || other.gameObject.tag == "Tower")
+        {
 			nextFireTime = (float)(Time.time + (reloadTime * .5));
 			myTarget = other.gameObject.transform;
 		}

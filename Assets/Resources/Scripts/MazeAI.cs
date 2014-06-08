@@ -5,11 +5,21 @@ using System.IO;
 
 public class MazeAI : MonoBehaviour
 {
-
+	//game controller
+	public GameController gameController;
 	List<GridCoord> maze = new List<GridCoord>();
 	// Use this for initialization
 	void Start ()
 	{
+<<<<<<< HEAD
+=======
+		//gets gamecontroller for start bool
+		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
+		if (gameControllerObject != null) {
+			gameController = gameControllerObject.GetComponent <GameController>();
+		}
+		StreamReader sr = new StreamReader(Application.dataPath + "/" + "maze1.txt");
+>>>>>>> FETCH_HEAD
 		string line = "";
 		string[] sline;
 		TextAsset mazetext = (TextAsset)Resources.Load ("maze1", typeof(TextAsset));
@@ -29,43 +39,44 @@ public class MazeAI : MonoBehaviour
 	public IEnumerator Place ()
 	{
 		while (true) {
-			Debug.Log ("Place()");
-			//random chance to place a turret
-			if (Random.value < .05f) {
-				//if there is at least one barrier
-				GameObject[] objs = GameObject.FindGameObjectsWithTag ("Barrier");
-				if (objs.Length > 0) {
-					//get the position of a random one
-					Vector3 bar = objs [Mathf.FloorToInt (Random.Range (0, objs.Length))].transform.position;
-					//get the current turrets
-					GameObject[] turrets = GameObject.FindGameObjectsWithTag ("Turret");
-					Vector3 pos = new Vector3 (bar.x, bar.y, 0);
-					bool doSpawn = true;
-					foreach (GameObject obj in turrets) {
-						//if there is already a turrent in that position
-						if (obj.transform.position.Equals (pos)) {
-							//don't spawn a new one
-							doSpawn = false;
-							break;
+			if (gameController.startGame){
+				Debug.Log ("Place()");
+				//random chance to place a turret
+				if (Random.value < .05f) {
+					//if there is at least one barrier
+					GameObject[] objs = GameObject.FindGameObjectsWithTag ("Barrier");
+					if (objs.Length > 0) {
+						//get the position of a random one
+						Vector3 bar = objs [Mathf.FloorToInt (Random.Range (0, objs.Length))].transform.position;
+						//get the current turrets
+						GameObject[] turrets = GameObject.FindGameObjectsWithTag ("Turret");
+						Vector3 pos = new Vector3 (bar.x, bar.y, 0);
+						bool doSpawn = true;
+						foreach (GameObject obj in turrets) {
+							//if there is already a turrent in that position
+							if (obj.transform.position.Equals (pos)) {
+								//don't spawn a new one
+								doSpawn = false;
+								break;
+							}
+						}
+						//otherwise, spawn it
+						if (doSpawn) {
+							Instantiate (Resources.Load ("Prefabs/Turret"), new Vector3 (bar.x, bar.y, 0), new Quaternion ());
 						}
 					}
-					//otherwise, spawn it
-					if (doSpawn) {
-						Instantiate (Resources.Load ("Prefabs/Turret"), new Vector3 (bar.x, bar.y, 0), new Quaternion ());
+				}
+
+				foreach(GridCoord coord in maze){
+					if(Pathfinder.grid == null){
+						break;
+					}
+					if(!Pathfinder.grid[coord.x, coord.y]){
+						placeWall (coord);
+						break;
 					}
 				}
 			}
-
-			foreach(GridCoord coord in maze){
-				if(Pathfinder.grid == null){
-					break;
-				}
-				if(!Pathfinder.grid[coord.x, coord.y]){
-					placeWall (coord);
-					break;
-				}
-			}
-			
 			//wait for 1 second before continuing
 			yield return new WaitForSeconds (1);
 		}

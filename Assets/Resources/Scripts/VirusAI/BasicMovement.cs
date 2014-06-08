@@ -4,40 +4,50 @@ using System.Collections.Generic;
 
 public class BasicMovement : AbstractMovement
 {
-
 	float speed = 3.5f;
-	bool moving = false;
-	public Stack<GridCoord> path;
+    bool moving = false;
+	public  Stack<GridCoord> path;
 	GridCoord target = new GridCoord(0,0);
+	//game controller
+	public GameController gameController;
 	
 	// Use this for initialization
 	void Start()
 	{
+		GameObject gameControllerObject = GameObject.FindWithTag ("GameController");
+		if (gameControllerObject != null) {
+			gameController = gameControllerObject.GetComponent <GameController>();
+		}
 		getPath(GameObject.FindGameObjectWithTag("Goal"));
 	}
 	
 	// Update is called once per frame
 	void Update()
 	{
-		//If the object is not mving and has a path remaining
-		if(!moving && path.Count > 0) {
-			//get the next position
-			target = path.Pop();
-			//calculate the angle between the object and target
-			float dY = target.y - transform.position.y;
-			float dX = target.x - transform.position.x;
-			float angle = Mathf.Atan2(dY,dX) *180 /Mathf.PI;
-			//rotate the object to face the direction of movement
-			transform.eulerAngles = new Vector3(0,0,angle-90);
-			//start the object moving
-			StartCoroutine(Move(gameObject.transform.position, new Vector3(target.x,
-			                                                               target.y,
-			                                                               gameObject.transform.position.z)));
-		}
-		//if the object is not moving and has no more positions on the path
-		if(!moving && path.Count == 0){
-			//destroy it
-			Destroy(gameObject);
+		if (gameController.startGame){
+			//If the object is not mving and has a path remaining
+			if(!moving && path.Count > 0) {
+				//get the next position
+				target = path.Pop();
+				//calculate the angle between the object and target
+				float dY = target.y - transform.position.y;
+				float dX = target.x - transform.position.x;
+				float angle = Mathf.Atan2(dY,dX) *180 /Mathf.PI;
+				//rotate the object to face the direction of movement
+				transform.eulerAngles = new Vector3(0,0,angle-90);
+				//start the object moving
+				StartCoroutine(Move(gameObject.transform.position, new Vector3(target.x,
+				                                                               target.y,
+				                                                               gameObject.transform.position.z)));
+			}
+			//if the object is not moving and has no more positions on the path
+	        if (!moving && path.Count == 0)
+	        {
+	            Shop.corpHealth--;
+	            Shop.cashCount = Shop.cashCount + 25;
+	            //destroy it
+	            Destroy(gameObject);
+        }
 		}
 	}
 
